@@ -16,6 +16,10 @@ Local build steps:
 
 Example command line usage from the project's root directory:
 ```
+cmd.exe
+> echo { "a": { "x": 1 }, "b": { "y": 2 } } | node dist/index.js
+
+bash
 $ echo '{ "a": { "x": 1 }, "b": { "y": 2 } }' | node dist/index.js
 ```
 

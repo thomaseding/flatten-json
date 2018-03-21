@@ -111,6 +111,26 @@ function escapeString(
 }
 
 
+function formatEntry(
+    prop: string,
+    value: any)
+{
+    const escapedProp = escapeString(prop);
+        
+    let entryStr = `"${escapedProp}": `;
+
+    if (typeof value === "string") {
+        const escapedVal = escapeString(value);
+        entryStr += `"${escapedVal}"`;
+    }
+    else {
+        entryStr += `${value}`;
+    }
+
+    return entryStr;
+}
+
+
 function prettyPrintFlattenedObject(
     flatObj: any)
     : void
@@ -121,19 +141,15 @@ function prettyPrintFlattenedObject(
 
     for (let i = 0; i < props.length; ++i) {
         const prop = props[i];
-        const val = flatObj[prop];
+        const value = flatObj[prop];
 
-        console.assert(!isObject(val));
-        console.assert(!isArray(val));
+        console.assert(!isObject(value));
+        console.assert(!isArray(value));
 
-        const escapedProp = escapeString(prop);
+        const entryStr = formatEntry(prop, value);
+        const comma = i === props.length - 1 ? "" : ",";
 
-        const comma = i === props.length - 1
-            ? ""
-            : ","
-            ;
-
-        console.log(`\t"${escapedProp}": ${val}${comma}`);
+        console.log(`\t${entryStr}${comma}`);
     }
 
     console.log("}");

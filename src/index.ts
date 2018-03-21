@@ -42,8 +42,8 @@ function walkRecursive(
 
             propChain.push(prop);
 
-            const val = curr[prop];
-            walkRecursive(val, propChain, outObj);
+            const value = curr[prop];
+            walkRecursive(value, propChain, outObj);
 
             propChain.pop();
         }

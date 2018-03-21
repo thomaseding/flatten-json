@@ -23,7 +23,7 @@ function isArray(
 {
     // I know [[Array.isArray]] exists, but I'm not sure about its portability.
     // Creating a poor-man's implementation
-    return x.constructor === Array;
+    return x && x.constructor === Array;
 }
 
 

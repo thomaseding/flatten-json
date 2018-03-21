@@ -121,7 +121,9 @@ function prettyPrintFlattenedObject(
     console.log("{");
 
     const props = Object.keys(flatObj);
-    for (const prop of props) {
+
+    for (let i = 0; i < props.length; ++i) {
+        const prop = props[i];
         const val = flatObj[prop];
 
         console.assert(!isObject(val));
@@ -129,7 +131,12 @@ function prettyPrintFlattenedObject(
 
         const escapedProp = escapeString(prop);
 
-        console.log(`\t"${escapedProp}": ${val}`);
+        const comma = i === props.length - 1
+            ? ""
+            : ","
+            ;
+
+        console.log(`\t"${escapedProp}": ${val}${comma}`);
     }
 
     console.log("}");

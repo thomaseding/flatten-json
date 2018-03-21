@@ -66,15 +66,12 @@ function flattenObject(
     obj: any)
     : any
 {
-    const flattenedObj = {};
-
-    if (obj && typeof obj === "object") {
-        walkRecursive(obj, [], flattenedObj);
-    }
-    else {
+    if (!obj || typeof obj !== "object" || isArray(obj)) {
         throw new Error("Expected input JSON to be an object.");
     }
 
+    const flattenedObj = {};
+    walkRecursive(obj, [], flattenedObj);
     return flattenedObj;
 }
 

@@ -75,6 +75,41 @@ function flattenObject(
 }
 
 
+function hexEscapeChar(
+    c: string)
+    : string
+{
+    console.assert(c.length === 1);
+
+    const code = c.codePointAt(0)!;
+    const hex = code.toString(16);
+
+    return `\\x${hex}`;
+}
+
+
+function escapeString(
+    str: string)
+    : string
+{
+    const parts: string[] = [];
+
+    for (const c of str) {
+        if (c < " " || c > "~") {
+            parts.push(hexEscapeChar(c));
+        }
+        else if (c === `"`) {
+            parts.push(`\\"`);
+        }
+        else {
+            parts.push(c);
+        }
+    }
+
+    return parts.join("");
+}
+
+
 function prettyPrintFlattenedObject(
     flatObj: any)
     : void
@@ -88,7 +123,9 @@ function prettyPrintFlattenedObject(
         console.assert(!isObject(val));
         console.assert(!isArray(val));
 
-        console.log(`\t${prop}: ${val}`);
+        const escapedProp = escapeString(prop);
+
+        console.log(`\t"${escapedProp}": ${val}`);
     }
 
     console.log("}");
